@@ -16,7 +16,7 @@ class TaskList extends Component {
         <div className={classes.wrapperListTask}>
           {tasks.map(task => {
             return (
-              <TaskItem task = {task} status={status}/>
+              <TaskItem task = {task} status={status} key={task.id}/>
             )
           })}
         </div>

@@ -8,6 +8,7 @@ import { Grid } from '@material-ui/core';
 import TaskList from '../../components/TaskList';
 import TaskForm from '../../components/TaskForm';
 import callAPI from '../../service/callAPI';
+import { connect } from 'react-redux';
 
 
 class TaskBoard extends Component {
@@ -19,25 +20,25 @@ class TaskBoard extends Component {
     }
   }
 
-  componentDidMount() {
-    callAPI('get','http://localhost:4000/tasks',null).then( response => {
-      this.setState({
-        listTask: response.data
-      })
-    })
-  }
+  // componentDidMount() {
+  //   callAPI('get','http://localhost:4000/tasks',null).then( response => {
+  //     this.setState({
+  //       listTask: response.data
+  //     })
+  //   })
+  // }
   
   showTaskBoard = () => {
-    const { classes } = this.props;
-    const { listTask } = this.state;
-    
+    // const { classes } = this.props;
+    // const { listTask } = this.state;
+    const { allTasks } = this.props;
     let result = null;
     result = (
-      <Grid container spacing={2} className = {classes.container}>
-        {STATUSES.map((status, index) => {
-          const taskfilter = listTask.filter(task => task.status === status.value);
+      <Grid container spacing={2} >
+        {STATUSES.map((status, index) => { 
+          const taskfilter = allTasks.filter(task => task.status === status.value);
           return (
-            <TaskList tasks = {taskfilter} status = {status}/>
+            <TaskList tasks = {taskfilter} status = {status} key={index}/>
           )
         })}
       </Grid>
@@ -64,10 +65,12 @@ class TaskBoard extends Component {
     return result;
   }
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
+    console.log(this.props.allTasks);
+    
     return (
       <div>
-        <Button variant="contained" color="primary" className={classes.button} onClick={this.openDialog}>
+        <Button variant="contained" color="primary"  onClick={this.openDialog}>
           <AddIcon/> Add new task
         </Button>
         {this.showTaskBoard()}
@@ -77,5 +80,9 @@ class TaskBoard extends Component {
   }
 }
 
-
-export default withStyles(Styles)(TaskBoard);
+const mapStatetoProps = (state) =>{
+  return {
+    allTasks: state.taskReducer
+  }
+}
+export default connect(mapStatetoProps,null) (TaskBoard);

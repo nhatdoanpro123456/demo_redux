@@ -7,14 +7,17 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import callAPI from '../../service/callAPI';
+import { connect } from 'react-redux'; 
+import * as actions from '../Actions/index';
 
 class TaskForm extends Component {
 
   onSubmit = (e) =>{
-    console.log(e.target.name.value);
     e.preventDefault();
-    
+    let value = {
+      nameTask:e.target.name.value
+    };
+    this.props.onAddTask(value);
     // callAPI('post','http://localhost:4000/tasks',{
     //   nameTask: this.state.name
     // }).then( response => {
@@ -27,6 +30,8 @@ class TaskForm extends Component {
   }
   render() {
     const {open, onClose} =this.props;
+    console.log(this.props);
+    
     return (
       <div>
         <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" onSubmit={this.onSubmit}>
@@ -63,5 +68,17 @@ class TaskForm extends Component {
   }
 }
 
+const mapStateToProps = (state) =>{
+  return {
+  }
+}
 
-export default withStyles(Styles)(TaskForm);
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onAddTask: (task) => {
+      dispatch (actions.addTask(task));
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(TaskForm);
