@@ -12,11 +12,10 @@ import * as actions from '../Actions/index';
 
 class TaskForm extends Component {
 
-  onSubmit = (e) =>{
+  onSubmit=(e)=>{
     e.preventDefault();
-    let value = {
-      nameTask:e.target.name.value
-    };
+    let value = e.target.name.value
+    console.log(value);
     this.props.onAddTask(value);
     // callAPI('post','http://localhost:4000/tasks',{
     //   nameTask: this.state.name
@@ -30,11 +29,10 @@ class TaskForm extends Component {
   }
   render() {
     const {open, onClose} =this.props;
-    console.log(this.props);
     
     return (
       <div>
-        <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" onSubmit={this.onSubmit}>
+        <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" >
           <DialogTitle id="form-dialog-title">Add new task</DialogTitle>
           <form onSubmit = {this.onSubmit}>
             <DialogContent>
@@ -56,7 +54,7 @@ class TaskForm extends Component {
               <Button 
               onClick={onClose} 
               color="primary"
-              type="submit"
+              type = "submit"
               >
                 OK
               </Button>
@@ -75,9 +73,7 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onAddTask: (task) => {
-      dispatch (actions.addTask(task));
-    }
+    onAddTask: (task) => dispatch(actions.addTask(task))
   }
 }
 

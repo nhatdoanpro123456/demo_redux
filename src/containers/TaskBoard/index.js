@@ -9,7 +9,8 @@ import TaskList from '../../components/TaskList';
 import TaskForm from '../../components/TaskForm';
 import callAPI from '../../service/callAPI';
 import { connect } from 'react-redux';
-
+import * as actions from '../../components/Actions/index';
+import FormEdit from '../../components/FormEdit';
 
 class TaskBoard extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class TaskBoard extends Component {
     result = (
       <Grid container spacing={2} >
         {STATUSES.map((status, index) => { 
-          const taskfilter = allTasks.filter(task => task.status === status.value);
+          const taskfilter = allTasks.tasks.filter(task => task.status === status.value);
           return (
             <TaskList tasks = {taskfilter} status = {status} key={index}/>
           )
@@ -64,10 +65,14 @@ class TaskBoard extends Component {
     )
     return result;
   }
-  render() {
-    // const { classes } = this.props;
-    console.log(this.props.allTasks);
+
+  
+  getTasks = () =>{
+    console.log("sdfsdf");
     
+  }
+  render() {
+    // console.log(this.props.allTasks);
     return (
       <div>
         <Button variant="contained" color="primary"  onClick={this.openDialog}>
@@ -79,10 +84,10 @@ class TaskBoard extends Component {
     )
   }
 }
-
 const mapStatetoProps = (state) =>{
   return {
-    allTasks: state.taskReducer
+    allTasks: state.reducer
   }
 }
 export default connect(mapStatetoProps,null) (TaskBoard);
+

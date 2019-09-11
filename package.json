@@ -13,6 +13,8 @@
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
     "redux-thunk": "^2.3.0",
+    "semantic-ui": "^2.4.2",
+    "semantic-ui-react": "^0.88.1",
     "uuid": "^3.3.3"
   },
   "scripts": {
@@ -37,6 +39,7 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^6.3.0"
+    "eslint": "^6.3.0",
+    "redux-logger": "^3.0.6"
   }
 }
